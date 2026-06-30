@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+
+# Per-story runtime state (never committed)
+state/
+
+# OS
+.DS_Store
