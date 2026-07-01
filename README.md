@@ -34,11 +34,13 @@ npx skills add animeblip-ai/animeblip-showrunner-skill -a claude-code
 ```
 
 This drops the skill into `~/.claude/skills/animeblip-showrunner-skill/` (pulled from the public
-GitHub repo). Or install from a local checkout:
+GitHub repo). The installable skill lives in `skills/animeblip-showrunner-skill/` inside the repo,
+so `npx skills add` bundles its `SKILL.md` + `scripts/` + `docs/` together. To install from a local
+checkout, copy that folder into your agent's skills dir:
 
 ```bash
-git clone https://github.com/animeblip-ai/animeblip-showrunner-skill.git \
-  ~/.claude/skills/animeblip-showrunner-skill
+git clone https://github.com/animeblip-ai/animeblip-showrunner-skill.git
+cp -r animeblip-showrunner-skill/skills/animeblip-showrunner-skill ~/.claude/skills/
 ```
 
 ## Setup
@@ -64,7 +66,7 @@ liars — produce the complete final video.
 The agent then: `create_project.py` → `send_message.py` (your brief) → poll
 `query_session.py` → triage any failures / answer any questions → deliver the final video
 link. To produce a whole series, it loops `create_episode.py` per episode. See
-[SKILL.md](./SKILL.md) for the full flow.
+[SKILL.md](./skills/animeblip-showrunner-skill/SKILL.md) for the full flow.
 
 The skill uses **one fixed art style** (the Anime6 preset) for every story — the agent does
 not pick styles. To use a different art style, change it on the website (the storyboard
@@ -73,23 +75,25 @@ editor); there's no `--style` to set here.
 ## Layout
 
 ```
-animeblip-showrunner-skill/
-├── SKILL.md                  # canonical entry (commands, flow, triage, rules)
-├── CLAUDE.md                 # maintainer guidance (conventions for editing this skill)
-├── README.md                 # this file
-├── LICENSE                   # MIT
-├── skill-card.md             # one-screen command quick-reference
-├── scripts/
-│   ├── _common.py            # shared REST client + auth
-│   ├── create_project.py       # new story (ep1 of a new series)
-│   ├── send_message.py       # send a message verbatim (full brief or one scoped step)
-│   ├── query_session.py      # one status snapshot (the poll channel)
-│   ├── get_project_state.py  # scenes + characters[]/elements[] read (the review channel)
-│   ├── create_episode.py     # next episode in the same series
-│   └── list_projects.py      # list projects (series) + their episodes — find one to resume
-└── docs/
-    ├── triage-rules.md       # failure classification + Chinese-prompt mitigation
-    └── cost-model-and-caps.md# what costs money + how to keep spend bounded
+animeblip-showrunner-skill/                 # the GitHub repo
+├── README.md                       # this file
+├── CLAUDE.md                       # maintainer guidance (conventions for editing this skill)
+├── LICENSE                         # MIT
+├── skill-card.md                   # one-screen command quick-reference
+└── skills/
+    └── animeblip-showrunner-skill/         # the installable skill (this whole folder installs)
+        ├── SKILL.md                # canonical entry (commands, flow, triage, rules)
+        ├── scripts/
+        │   ├── _common.py              # shared REST client + auth
+        │   ├── create_project.py       # new story (ep1 of a new series)
+        │   ├── send_message.py         # send a message verbatim (full brief or one scoped step)
+        │   ├── query_session.py        # one status snapshot (the poll channel)
+        │   ├── get_project_state.py    # scenes + characters[]/elements[] read (the review channel)
+        │   ├── create_episode.py       # next episode in the same series
+        │   └── list_projects.py        # list projects (series) + their episodes — find one to resume
+        └── docs/
+            ├── triage-rules.md         # failure classification + Chinese-prompt mitigation
+            └── cost-model-and-caps.md  # what costs money + how to keep spend bounded
 ```
 
 Call the per-op script directly, e.g. `python3 scripts/create_project.py …`. `--dry-run`
@@ -98,7 +102,7 @@ works on every command, in any position.
 ## Flow (instruction-driven — no mode flag)
 
 End-to-end vs step-by-step is decided by **what message you send**, driven by the user's
-request — not a flag. See [SKILL.md](./SKILL.md) for the full flow.
+request — not a flag. See [SKILL.md](./skills/animeblip-showrunner-skill/SKILL.md) for the full flow.
 
 - **Default — end-to-end (one shot):** `create_project.py` → `send_message.py` with the full
   brief *plus* an end-to-end line → poll `query_session.py` → deliver. While polling: triage
