@@ -1,6 +1,7 @@
 ---
 name: animeblip-showrunner-skill
-description: Animeblip Showrunner — create complete AI story videos at scale (screenplay → consistent characters → scene images → scene videos → final cut) in 900+ art styles, as short videos, films, or episodic series. Drives Animeblip's production agent end-to-end, acting as the producer/reviewer it lacks. Use when the user wants AI video generation, a multi-scene story video, a vertical anime micro-drama, an ad/promo, a storyboard, or to auto-produce an episodic series — to create, produce, or review an Animeblip video, episode, or series autonomously. Triggers: animeblip, showrunner, AI video generation, text-to-video, story video, micro-drama, storyboard, episodic anime, "produce an episode", "auto-produce a series".
+description: >-
+  Animeblip Showrunner — create complete AI story videos at scale (screenplay → consistent characters → scene images → scene videos → final cut) in 900+ art styles, as short videos, films, or episodic series. Drives Animeblip's production agent end-to-end, acting as the producer/reviewer it lacks. Use when the user wants AI video generation, a multi-scene story video, a vertical anime micro-drama, an ad/promo, a storyboard, or to auto-produce an episodic series — to create, produce, or review an Animeblip video, episode, or series autonomously. Triggers animeblip, showrunner, AI video generation, text-to-video, story video, micro-drama, storyboard, episodic anime, "produce an episode", "auto-produce a series".
 user-invocable: true
 metadata:
   {
